@@ -51,19 +51,12 @@ Although in the global scope, they are not available until after the `deviceread
 
 navigator.vibrate,<br />
 navigator.notification.vibrate
-- Amazon Fire OS
 - Android
-- BlackBerry 10
-- Firefox OS
 - iOS
-- Windows Phone 7 and 8
-- Windows (Windows Phone 8.1 devices only)
 
 navigator.notification.vibrateWithPattern<br />
 navigator.notification.cancelVibration
 - Android
-- Windows Phone 8
-- Windows (Windows Phone 8.1 devices only)
 
 ## vibrate (recommended)
 

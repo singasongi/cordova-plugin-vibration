@@ -23,7 +23,9 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import android.content.Context;
+import android.os.Build;
 import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.media.AudioManager;
 
 /**
@@ -89,8 +91,11 @@ public class Vibration extends CordovaPlugin {
         }
         AudioManager manager = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
         if (manager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-            Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(time);
+		if (Build.VERSION.SDK_INT >= 26) {
+			((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(time, VibrationEffect.DEFAULT_AMPLITUDE));
+		} else {
+			((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(time);
+		}
         }
     }
 
@@ -118,8 +123,11 @@ public class Vibration extends CordovaPlugin {
     public void vibrateWithPattern(long[] pattern, int repeat) {
         AudioManager manager = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
         if (manager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-            Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(pattern, repeat);
+            if (Build.VERSION.SDK_INT >= 26) {
+                ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createWaveform(pattern, repeat));
+            } else {
+                ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(pattern, repeat);
+            }
         }
     }
 
@@ -127,7 +135,7 @@ public class Vibration extends CordovaPlugin {
      * Immediately cancels any currently running vibration.
      */
     public void cancelVibration() {
-        Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.cancel();
+		Context context = this.cordova.getActivity().getApplicationContext();
+		((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).cancel();
     }
 }
