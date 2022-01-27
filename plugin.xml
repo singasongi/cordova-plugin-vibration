@@ -55,6 +55,7 @@
         <header-file src="src/ios/CDVVibration.h" />
 	    <source-file src="src/ios/CDVVibration.m" />
         <js-module src="www/vibration.js" name="notification">
+        <merges target="navigator.notification" />
             <merges target="navigator" />
         </js-module>
 
@@ -67,6 +68,7 @@
             <runs />
         </js-module>
         <js-module src="www/vibration.js" name="notification">
+        <merges target="navigator.notification" />
             <merges target="navigator" />
         </js-module>
 
@@ -80,6 +82,7 @@
             <merges target="navigator" />
         </js-module>
         <js-module src="www/vibration.js" name="notification">
+        <merges target="navigator.notification" />
             <merges target="navigator" />
         </js-module>
     </platform>
