@@ -90,12 +90,13 @@ public class Vibration extends CordovaPlugin {
             time = 500;
         }
         AudioManager manager = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+        Context context = this.cordova.getActivity().getApplicationContext();
         if (manager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-		if (Build.VERSION.SDK_INT >= 26) {
-			((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(time, VibrationEffect.DEFAULT_AMPLITUDE));
-		} else {
-			((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(time);
-		}
+            if (Build.VERSION.SDK_INT >= 26) {
+                ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(time, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(time);
+            }
         }
     }
 
@@ -122,6 +123,7 @@ public class Vibration extends CordovaPlugin {
      */
     public void vibrateWithPattern(long[] pattern, int repeat) {
         AudioManager manager = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+        Context context = this.cordova.getActivity().getApplicationContext();
         if (manager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
             if (Build.VERSION.SDK_INT >= 26) {
                 ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createWaveform(pattern, repeat));
